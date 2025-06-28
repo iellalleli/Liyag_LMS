@@ -16,13 +16,15 @@
         @endif
 
         {{-- <form action="{{ route('quotations.store') }}" method="POST"> --}}
-        <form action="{{ route('client.leads.store') }}" method="POST">
+        <form action="{{ route('client.combined_leads.store') }}" method="POST">
             @csrf
 
             @include('quotations.partials.form')
 
             {{-- <a href="{{ route('quotations.index') }}" class="btn btn-secondary">Cancel</a> --}}
-            <a href="{{ route('client.dashboard') }}" class="btn btn-secondary">Cancel</a>
+            {{-- <a href="{{ route('client.dashboard') }}" class="btn btn-secondary">Cancel</a> --}}
+            <a href="{{ url('/') }}" class="btn btn-secondary">Cancel</a>
+
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

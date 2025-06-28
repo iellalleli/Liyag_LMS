@@ -49,9 +49,9 @@ class RegisterController extends Controller
         if ($user->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('sales_rep')) {
-            return redirect()->route('sales.dashboard');
+            return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('client')) {
-            return redirect()->route('client.dashboard');
+            return redirect('/');
         }
 
         return redirect('/'); // fallback

@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
 
             // Quotation fields
-            $table->string('quotation_id')->unique();
+            // $table->string('quotation_id')->unique();
             $table->string('cust_name');
             $table->string('cust_phone');
             $table->string('cust_email');

@@ -8,11 +8,15 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+
         <div class="d-flex justify-content-between mb-3">
-            <form method="GET" action="{{ route('combined_leads.index') }}" class="d-flex">
+            {{-- <form method="GET" action="{{ route('combined_leads.index') }}" class="d-flex">
                 <input type="text" name="search" class="form-control me-2" placeholder="Search by customer or rep...">
                 <button class="btn btn-outline-secondary">Search</button>
-            </form>
+            </form> --}}
+
+            <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">⬅️ Return to Dashboard</a>
+
             <a href="{{ route('combined_leads.create') }}" class="btn btn-success">➕ Create Lead</a>
         </div>
 

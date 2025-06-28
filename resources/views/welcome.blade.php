@@ -9,13 +9,13 @@
             @if(auth()->user()->hasRole('admin'))
                 <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-lg mx-2">Go to Dashboard</a>
             @elseif(auth()->user()->hasRole('sales_rep'))
-                <a href="{{ route('sales.dashboard') }}" class="btn btn-primary btn-lg mx-2">Go to Dashboard</a>
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-lg mx-2">Go to Dashboard</a>
             @elseif(auth()->user()->hasRole('client'))
-                <a href="{{ route('client.dashboard') }}" class="btn btn-primary btn-lg mx-2">Get Quotation</a>
+                <a href="{{ route('client.quotations.create') }}" class="btn btn-primary btn-lg mx-2">Get Quotation</a>
             @endif
         @else
             <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg mx-2">Log In</a>
-            <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg mx-2">Register as Client</a>
+            <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg mx-2">Sign-up and Get Quotation</a>
         @endauth
 
         <hr class="my-5">

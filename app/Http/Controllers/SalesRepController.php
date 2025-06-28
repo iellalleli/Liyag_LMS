@@ -85,11 +85,14 @@ class SalesRepController extends Controller
         }
 
         $request->validate([
-            'user_id' => 'required|exists:users,id|unique:sales_reps,user_id,' . $salesRep->id,
+            'user_name' => 'required|string|max:255',
+            'user_email' => 'required|email|unique:users,email,' . $salesRep->user_id,
         ]);
 
-        $salesRep->update([
-            'user_id' => $request->user_id,
+        // Update the related User
+        $salesRep->user->update([
+            'name' => $request->user_name,
+            'email' => $request->user_email,
         ]);
 
         return redirect()->route('sales-reps.index')->with('success', 'Sales rep updated successfully!');
@@ -104,7 +107,13 @@ class SalesRepController extends Controller
             abort(403, 'Unauthorized access.');
         }
 
+        // Delete the associated User first
+        $salesRep->user()->delete();
+
+        // Then delete the SalesRep
         $salesRep->delete();
+
         return redirect()->route('sales-reps.index')->with('success', 'Sales rep deleted successfully!');
     }
+
 }

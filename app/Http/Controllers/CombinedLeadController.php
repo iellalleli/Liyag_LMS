@@ -14,9 +14,21 @@ class CombinedLeadController extends Controller
     // LeadController
     public function index()
     {
-        $leads = CombinedLead::all();
+        $user = auth()->user();
+
+        if ($user->hasRole('sales_rep')) {
+            // Only show leads assigned to this sales rep
+            $leads = CombinedLead::with('assignedRep')
+                ->where('assigned_rep', $user->id)
+                ->get();
+        } else {
+            // Admins and others see everything
+            $leads = CombinedLead::with('assignedRep')->get();
+        }
+
         return view('combined_leads.index', compact('leads'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -56,10 +68,10 @@ class CombinedLeadController extends Controller
         // Generate quotation_id
         $date = now()->format('Ymd');
         $count = CombinedLead::count() + 1;
-        $quotationId = 'LEAD-' . $date . '-' . str_pad($count, 3, '0', STR_PAD_LEFT);
+        // $quotationId = 'LEAD-' . $date . '-' . str_pad($count, 3, '0', STR_PAD_LEFT);
 
         CombinedLead::create([
-            'quotation_id' => $quotationId,
+            // 'quotation_id' => $quotationId,
             'cust_name' => $request->cust_name,
             'cust_phone' => $request->cust_phone,
             'cust_email' => $request->cust_email,
@@ -72,13 +84,21 @@ class CombinedLeadController extends Controller
             'hair_makeup' => $request->has('hair_makeup'),
             'live_band' => $request->has('live_band'),
             'stage' => $request->stage ?? 'Not Started',
-            'assigned_rep' => null,
-            'wedding_date' => null,
-            'lead_source' => null,
+            'assigned_rep' => auth()->check() && auth()->user()->hasRole('sales_rep')
+                ? auth()->id()
+                : ($request->filled('assigned_rep') ? $request->assigned_rep : null),
+            'wedding_date' => $request->filled('wedding_date') ? $request->wedding_date : null,
+            'lead_source' => 'Website',
         ]);
+
+        if (auth()->check() && auth()->user()->hasRole('client')) {
+            return redirect('/')
+                ->with('success', 'Lead created successfully.');
+        }
 
         return redirect()->route('combined_leads.index')
             ->with('success', 'Lead created successfully.');
+
     }
 
     /**
@@ -138,8 +158,7 @@ class CombinedLeadController extends Controller
     public function destroy(CombinedLead $combinedLead)
     {
         $combinedLead->delete();
-
-        return redirect()->route('client.dashboard')
-            ->with('success', 'Lead deleted successfully.');
+        return back()->with('success', 'Lead deleted successfully.');
     }
+
 }

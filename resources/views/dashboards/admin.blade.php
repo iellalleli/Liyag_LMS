@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4">🎯 Admin Dashboard</h2>
+        <h2 class="mb-4">🎯 Dashboard</h2>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -15,13 +15,6 @@
             <a href="{{ route('leads.create') }}" class="btn btn-sm btn-outline-dark ms-2">Assign Now</a>
         </div>
         @endif --}}
-
-
-        <div class="mb-4">
-            <a href="{{ route('users.create') }}" class="btn btn-success">
-                ➕ Create Admin or Sales Rep
-            </a>
-        </div>
 
         <div class="row">
             {{-- Sales Reps --}}
