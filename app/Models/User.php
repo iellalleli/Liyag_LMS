@@ -75,6 +75,12 @@ class User extends Authenticatable
         return $this->role === 'client';
     }
 
+    public function quotation()
+    {
+        return $this->hasOne(Quotation::class);
+    }
+
+
 }
 
 

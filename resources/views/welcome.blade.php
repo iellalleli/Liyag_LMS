@@ -570,7 +570,15 @@
                     @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('sales_rep'))
                         <a href="{{ route('admin.dashboard') }}" class="btn btn-soft">Go to Dashboard</a>
                     @elseif(auth()->user()->hasRole('client'))
-                        <a href="{{ route('client.quotations.create') }}" class="btn btn-soft">Get Quotation</a>
+                        @php
+                            $hasQuotation = \App\Models\CombinedLead::where('cust_email', auth()->user()->email)->exists();
+                        @endphp
+
+                        @if($hasQuotation)
+                            <a href="{{ route('client.dashboard') }}" class="btn btn-soft">View My Quotation</a>
+                        @else
+                            <a href="{{ route('client.quotations.create') }}" class="btn btn-soft">Get Quotation</a>
+                        @endif
                     @endif
                 @else
                     <a href="{{ route('login') }}" class="btn btn-soft">Login</a>

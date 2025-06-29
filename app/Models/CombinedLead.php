@@ -10,6 +10,8 @@ class CombinedLead extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id', // ← Add this!
+
         // Quotation fields
         'quotation_id',
         'cust_name',
@@ -38,4 +40,11 @@ class CombinedLead extends Model
     {
         return $this->belongsTo(User::class, 'assigned_rep')->withDefault();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    
 }

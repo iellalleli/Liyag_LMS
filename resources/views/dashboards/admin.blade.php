@@ -52,13 +52,17 @@
 </style>
 
 <div class="container py-4">
-    <h2 class="dashboard-heading">Admin Dashboard</h2>
+    <h2 class="dashboard-heading">
+        {{ Auth::user()->hasRole('admin') ? 'Admin Dashboard' : 'Sales Representative Dashboard' }}
+    </h2>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     <div class="row">
+        {{-- Only show this to admin --}}
+        @role('admin')
         <div class="col-md-6 mb-4">
             <div class="card p-4">
                 <h5 class="card-title">Handle Accounts</h5>
@@ -66,7 +70,9 @@
                 <a href="{{ route('sales-reps.index') }}" class="btn btn-soft">Manage Accounts</a>
             </div>
         </div>
+        @endrole
 
+        {{-- Accessible to both admin and sales_rep --}}
         <div class="col-md-6 mb-4">
             <div class="card p-4">
                 <h5 class="card-title">Leads</h5>

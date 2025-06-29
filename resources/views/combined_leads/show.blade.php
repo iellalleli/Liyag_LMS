@@ -89,8 +89,10 @@
         <div class="mt-4 action-buttons">
             @role(['admin', 'sales_rep'])
                 <a href="{{ route('combined_leads.edit', $lead->id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ route('combined_leads.index') }}" class="btn btn-outline-secondary">Back to Leads</a>
+            @elseif(auth()->user()->hasRole('client'))
+                <a href="{{ route('client.dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
             @endrole
-            <a href="{{ route('combined_leads.index') }}" class="btn btn-outline-secondary">Back to Leads</a>
         </div>
     </div>
 </div>
