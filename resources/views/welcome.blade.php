@@ -241,22 +241,24 @@
         gap: 1rem;
         margin-bottom: 3rem;
         flex-wrap: wrap;
-        transition: transform 0.3s, box-shadow 0.3s;
+        transition: transform 0.3s, box-shadow 0.3s, border-radius 0.3s;
         /* Removed box-shadow on hover */
-        }
-        .testimonial-item:hover {
+    }
+    .testimonial-item:hover {
         transform: translateY(-8px) scale(1.03);
         /* box-shadow removed */
         background: #fff;
-        }
-        .testimonial-item:hover .testimonial-avatar {
+        border-radius: 20px;
+    }
+    .testimonial-item:hover .testimonial-avatar {
         box-shadow: 0 8px 24px rgba(111, 78, 55, 0.18);
         border-color: #d8c0aa;
-        }
-        .testimonial-item:hover .testimonial-quote {
+    }
+    .testimonial-item:hover .testimonial-quote {
         background-color: #fff;
         color: #6F4E37;
-        }
+        border-radius: 18px;
+    }
 
     .testimonial-avatar {
         width: 120px;
@@ -284,6 +286,7 @@
         font-style: italic;
         position: relative;
         order: 2;
+        transition: border-radius 0.3s;
     }
 
     .testimonial-quote p {
@@ -747,5 +750,19 @@
     </div>
   </div>
 </section>
+
+<audio id="bg-music" autoplay loop>
+    <source src="{{ asset('audio/background.mp3') }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    // Lower the volume after autoplay
+    document.addEventListener('DOMContentLoaded', function () {
+        const audio = document.getElementById('bg-music');
+        audio.volume = 0.07; // Set volume from 0.0 to 1.0
+    });
+</script>
+
 
 @endsection
