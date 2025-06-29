@@ -13,6 +13,7 @@
     .hero-section {
         position: relative;
         height: 100vh;
+        min-height: 500px;
         overflow: hidden;
     }
 
@@ -69,6 +70,8 @@
         text-decoration: none;
         margin: 0 10px;
         transition: background 0.3s ease;
+        display: inline-block;
+        font-size: 1rem;
     }
 
     .btn-soft:hover {
@@ -89,6 +92,42 @@
 
     .animate-fade {
         animation: fadeInUp 1s ease-out;
+    }
+
+    /* Responsive styles for Hero Section */
+    @media (max-width: 900px) {
+        .center-message {
+            padding: 2rem 1rem;
+        }
+        .center-message .main-text {
+            font-size: 2rem;
+        }
+        .hero-overlay {
+            padding: 4rem 1rem 1rem 1rem;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .hero-section {
+            height: 70vh;
+            min-height: 350px;
+        }
+        .center-message {
+            padding: 1.2rem 0.5rem;
+            border-radius: 16px;
+        }
+        .center-message .main-text {
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+        .btn-soft {
+            padding: 0.5rem 1rem;
+            font-size: 0.95rem;
+            margin: 0 4px 8px 4px;
+        }
+        .hero-overlay {
+            padding: 2.5rem 0.5rem 1rem 0.5rem;
+        }
     }
 
     /* Features Section */
@@ -314,6 +353,17 @@
             0 12px 24px rgba(111, 78, 55, 0.18),
             0 6px 12px rgba(111, 78, 55, 0.22);
     }
+
+        /* Responsive: Fill the screen with the background image on mobile */
+        @media (max-width: 600px) {
+            .features-section,
+            .testimonials-section,
+            .real-wedding-section {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            }
+        }
 
     /* About Us Section */
     .about-section {
