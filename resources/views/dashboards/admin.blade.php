@@ -1,98 +1,79 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2 class="mb-4">🎯 Dashboard</h2>
+<style>
+    .dashboard-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #6F4E37;
+        margin-bottom: 2rem;
+        text-shadow: 0 2px 12px rgba(111, 78, 55, 0.15);
+    }
 
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+    .card {
+        border: none;
+        border-radius: 20px;
+        background-color: #fdf6f0;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        {{-- @if($unassignedQuotations->count())
-        <div class="alert alert-warning">
-            ⚠️ <strong>{{ $unassignedQuotations->count() }}</strong> new
-            quotation{{ $unassignedQuotations->count() > 1 ? 's' : '' }} have not yet been assigned as leads.
-            <a href="{{ route('leads.create') }}" class="btn btn-sm btn-outline-dark ms-2">Assign Now</a>
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(111, 78, 55, 0.1);
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #6F4E37;
+        font-family: 'Georgia', serif;
+    }
+
+    .card-text {
+        color: #4b2e2e;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .btn-soft {
+        background-color: #d8c0aa;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 0.5rem 1.2rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background 0.3s ease;
+    }
+
+    .btn-soft:hover {
+        background-color: #c8ae97;
+        color: white;
+    }
+</style>
+
+<div class="container py-4">
+    <h2 class="dashboard-heading">Admin Dashboard</h2>
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card p-4">
+                <h5 class="card-title">Handle Accounts</h5>
+                <p class="card-text">Create, view, and manage different accounts.</p>
+                <a href="{{ route('sales-reps.index') }}" class="btn btn-soft">Manage Accounts</a>
+            </div>
         </div>
-        @endif --}}
 
-        <div class="row">
-            {{-- Sales Reps --}}
-            <div class="col-md-6 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Sales Representatives</h5>
-                        <p class="card-text">View and manage your sales rep accounts.</p>
-                        <a href="{{ route('sales-reps.index') }}" class="btn btn-primary">Manage Sales Reps</a>
-                    </div>
-                </div>
+        <div class="col-md-6 mb-4">
+            <div class="card p-4">
+                <h5 class="card-title">Leads</h5>
+                <p class="card-text">Track, assign, and manage client leads.</p>
+                <a href="{{ route('combined_leads.index') }}" class="btn btn-soft">View Leads</a>
             </div>
-
-            {{-- Combined --}}
-            <div class="col-md-6 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Leads</h5>
-                        <p class="card-text">Track, assign, and manage client leads.</p>
-                        <a href="{{ route('combined_leads.index') }}" class="btn btn-primary">View Leads</a>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Leads --}}
-            {{-- <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Leads</h5>
-                        <p class="card-text">Track, assign, and manage client leads.</p>
-                        <a href="{{ route('leads.index') }}" class="btn btn-primary">View Leads</a>
-                    </div>
-                </div>
-            </div> --}}
-
-            {{-- Quotations --}}
-            {{-- <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Quotations</h5>
-                        <p class="card-text">Review all submitted quotations.</p>
-                        <a href="{{ route('quotations.index') }}" class="btn btn-primary">View Quotations</a>
-                    </div>
-                </div>
-            </div> --}}
-
-            {{-- Announcements --}}
-            {{-- <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Announcements</h5>
-                        <p class="card-text">Post updates for clients and sales reps.</p>
-                        <a href="{{ route('announcements.index') }}" class="btn btn-primary">Manage Announcements</a>
-                    </div>
-                </div>
-            </div> --}}
-
-            {{-- Checklists --}}
-            {{-- <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Checklists</h5>
-                        <p class="card-text">Assign and monitor task checklists.</p>
-                        <a href="{{ route('checklists.index') }}" class="btn btn-primary">View Checklists</a>
-                    </div>
-                </div>
-            </div> --}}
-
-            {{-- Inquiries --}}
-            {{-- <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Inquiries</h5>
-                        <p class="card-text">Review messages sent by clients.</p>
-                        <a href="{{ route('inquiries.index') }}" class="btn btn-primary">View Inquiries</a>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
+</div>
 @endsection

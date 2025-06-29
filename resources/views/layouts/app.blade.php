@@ -17,6 +17,8 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    @stack('styles')
+
     <style>
         * {
             margin: 0;
@@ -151,7 +153,10 @@
         main.with-padding {
             padding: 1.5rem !important;
         }
+        
     </style>
+
+
 </head>
 
 <body>
@@ -232,9 +237,9 @@
 
                         <div class="col-lg-3 col-md-6 mb-4">
                             <h6 class="footer-title">Resources</h6>
-                            <a href="https://docs.google.com/document/d/your-terms-doc-id/view" target="_blank"
+                            <a href="https://drive.google.com/file/d/1rI8g42u4WK9QODJzXtzPETIUpSFmunJg/view?usp=sharing" target="_blank"
                                class="footer-link">Terms of Service</a>
-                            <a href="https://docs.google.com/document/d/your-privacy-doc-id/view" target="_blank"
+                            <a href="https://drive.google.com/file/d/1LHLeR3ud4Gj9XAZqE4KKNc2WzsVaz34V/view?usp=sharing" target="_blank"
                                class="footer-link">Privacy Policy</a>
                         </div>
 

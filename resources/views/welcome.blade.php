@@ -17,6 +17,34 @@
         overflow: hidden;
     }
 
+    .sound-toggle-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        border-radius: 50%;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+        color: #6F4E37;
+        transition: background 0.3s, transform 0.3s;
+        backdrop-filter: blur(6px);
+    }
+
+    .sound-toggle-btn:hover {
+        background: rgba(255, 255, 255, 0.8);
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 600px) {
+        .sound-toggle-btn {
+            top: 10px;
+            right: 10px;
+            font-size: 1rem;
+        }
+    }
+
     .video-bg {
         position: absolute;
         top: 0;
@@ -528,6 +556,10 @@
     </video>
 
     <div class="hero-overlay">
+        <button id="music-toggle" class="sound-toggle-btn" aria-label="Toggle Sound">
+            <i class="fas fa-volume-mute"></i>
+        </button>
+
         <div class="center-message animate-fade">
             <p class="main-text">
                 For every heartbeat beyond <em>‘I do’</em>,<br>we’re with you.
@@ -549,9 +581,9 @@
             <p class="mt-4" style="font-size: 1rem; color: #4b2e2e;">
                 We're honored to be part of your special journey.
                 By continuing, you agree to Liyag’s 
-                <a href="https://docs.google.com/document/d/your-terms-doc-id/view" target="_blank" style="color:#a46a4e; font-weight: 600; text-decoration: underline;">Terms & Conditions</a> 
+                <a href="https://drive.google.com/file/d/1rI8g42u4WK9QODJzXtzPETIUpSFmunJg/view?usp=sharing" target="_blank" style="color:#a46a4e; font-weight: 600; text-decoration: underline;">Terms & Conditions</a> 
                 and 
-                <a href="https://docs.google.com/document/d/your-privacy-doc-id/view" target="_blank" style="color:#a46a4e; font-weight: 600; text-decoration: underline;">Privacy Policy</a>.
+                <a href="https://drive.google.com/file/d/1LHLeR3ud4Gj9XAZqE4KKNc2WzsVaz34V/view?usp=sharing" target="_blank" style="color:#a46a4e; font-weight: 600; text-decoration: underline;">Privacy Policy</a>.
             </p>
         </div>
     </div>
@@ -619,7 +651,7 @@
     <div class="container">
         <h4 class="real-wedding-heading">Vows, Wows, and Everything In Between</h4>
 
-        <div id="weddingCarousel" class="carousel slide mx-auto" data-bs-ride="carousel" style="max-width: 960px;">
+        <div id="weddingCarousel" class="carousel slide mx-auto" data-bs-ride="carousel" data-bs-interval="3000" style="max-width: 960px;">
             <div class="carousel-inner">
             <!-- Slide 1 -->
             <div class="carousel-item active">
@@ -757,12 +789,26 @@
 </audio>
 
 <script>
-    // Lower the volume after autoplay
     document.addEventListener('DOMContentLoaded', function () {
         const audio = document.getElementById('bg-music');
-        audio.volume = 0.07; // Set volume from 0.0 to 1.0
+        const toggleBtn = document.getElementById('music-toggle');
+        let isPlaying = false;
+
+        // Default state: muted
+        audio.volume = 0.07;
+        audio.pause();
+
+        toggleBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                toggleBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else {
+                audio.play();
+                toggleBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
     });
 </script>
-
 
 @endsection
