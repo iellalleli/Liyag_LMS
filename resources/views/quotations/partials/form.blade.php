@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 {{-- <div class="mb-3">
     <label>Name</label>
     <input type="text" name="cust_name" class="form-control" value="{{ old('cust_name', $quotation->cust_name ?? '') }}"
@@ -7,13 +8,30 @@
     <label>Phone</label>
     <input type="text" name="cust_phone" class="form-control"
         value="{{ old('cust_phone', $quotation->cust_phone ?? '') }}" required>
+=======
+@php
+    $isEdit = isset($quotation);
+    $user = Auth::user();
+    $isClient = $user && $user->hasRole('client');
+@endphp
+
+<div class="mb-3">
+    <label class="form-label">Name</label>
+    <input type="text" name="cust_name" class="form-control"
+        value="{{ old('cust_name', $isClient ? $user->name : ($isEdit ? $quotation->cust_name : '')) }}" required>
+>>>>>>> Stashed changes
 </div>
 <div class="mb-3">
     <label>Email</label>
     <input type="email" name="cust_email" class="form-control"
+<<<<<<< Updated upstream
         value="{{ old('cust_email', $quotation->cust_email ?? '') }}" required>
+=======
+        value="{{ old('cust_email', $isClient ? $user->email : ($isEdit ? $quotation->cust_email : '')) }}" required>
+>>>>>>> Stashed changes
 </div>
 <div class="mb-3">
+<<<<<<< Updated upstream
     <label>Communication Method</label>
     <select name="communication_method" class="form-control" required>
         <option value="Email" {{ old('communication_method', $quotation->communication_method ?? '') == 'Email' ?
@@ -22,6 +40,23 @@
             'selected' : '' }}>Phone</option>
         <option value="Messenger" {{ old('communication_method', $quotation->communication_method ?? '') == 'Messenger'
             ? 'selected' : '' }}>Messenger</option>
+=======
+    <label class="form-label">Phone</label>
+    <input type="text" name="cust_phone" class="form-control"
+        value="{{ old('cust_phone', $isClient ? $user->phone : ($isEdit ? $quotation->cust_phone : '')) }}" required>
+</div>
+
+
+<div class="mb-3">
+    <label class="form-label">Communication Method</label>
+    <select name="communication_method" class="form-control" required>
+        <option value="">-- Select --</option>
+        @foreach (['Email', 'Phone', 'Messenger'] as $method)
+            <option value="{{ $method }}" {{ old('communication_method', $isEdit ? $quotation->communication_method : '') == $method ? 'selected' : '' }}>
+                {{ $method }}
+            </option>
+        @endforeach
+>>>>>>> Stashed changes
     </select>
 </div>
 <div class="mb-3">
@@ -33,6 +68,7 @@
     <label for="budget_range" class="form-label">Budget Range</label>
     <select name="budget_range" class="form-control" required>
         <option value="">-- Select Range --</option>
+<<<<<<< Updated upstream
         <option value="under_50k" {{ old('budget_range', $quotation->budget_range ?? '') == 'under_50k' ? 'selected' :
             '' }}>Under ₱50,000</option>
         <option value="50k_100k" {{ old('budget_range', $quotation->budget_range ?? '') == '50k_100k' ? 'selected' : ''
@@ -82,6 +118,16 @@
         <option value="Email" {{ old('communication_method') == 'Email' ? 'selected' : '' }}>Email</option>
         <option value="Phone" {{ old('communication_method') == 'Phone' ? 'selected' : '' }}>Phone</option>
         <option value="Messenger" {{ old('communication_method') == 'Messenger' ? 'selected' : '' }}>Messenger</option>
+=======
+        <option value="under_50k" {{ old('budget_range', $isEdit ? $quotation->budget_range : '') == 'under_50k' ? 'selected' : '' }}>
+            Under ₱50,000</option>
+        <option value="50k_100k" {{ old('budget_range', $isEdit ? $quotation->budget_range : '') == '50k_100k' ? 'selected' : '' }}>
+            ₱50,000 - ₱100,000</option>
+        <option value="100k_200k" {{ old('budget_range', $isEdit ? $quotation->budget_range : '') == '100k_200k' ? 'selected' : '' }}>
+            ₱100,000 - ₱200,000</option>
+        <option value="200k_plus" {{ old('budget_range', $isEdit ? $quotation->budget_range : '') == '200k_plus' ? 'selected' : '' }}>
+            Above ₱200,000</option>
+>>>>>>> Stashed changes
     </select>
 </div>
 
@@ -91,6 +137,7 @@
 </div>
 
 <div class="mb-3">
+<<<<<<< Updated upstream
     <label for="budget_range" class="form-label">Budget Range</label>
     <select name="budget_range" class="form-control" required>
         <option value="">-- Select Range --</option>
@@ -114,4 +161,28 @@
     <label><input type="checkbox" name="hair_makeup" value="1" {{ old('hair_makeup') ? 'checked' : '' }}> Hair &
         Makeup</label><br>
     <label><input type="checkbox" name="live_band" value="1" {{ old('live_band') ? 'checked' : '' }}> Live Band</label>
+=======
+    <label class="form-label d-block">Services</label>
+
+    <div class="form-check">
+        <input type="checkbox" name="package_deal" value="1" class="form-check-input" {{ old('package_deal', $isEdit ? $quotation->package_deal : false) ? 'checked' : '' }}>
+        <label class="form-check-label">Package Deal (includes photography and videography, customized giveaways, and
+            more!)</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" name="catering" value="1" class="form-check-input" {{ old('catering', $isEdit ? $quotation->catering : false) ? 'checked' : '' }}>
+        <label class="form-check-label">Catering</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" name="hair_makeup" value="1" class="form-check-input" {{ old('hair_makeup', $isEdit ? $quotation->hair_makeup : false) ? 'checked' : '' }}>
+        <label class="form-check-label">Hair & Makeup</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" name="live_band" value="1" class="form-check-input" {{ old('live_band', $isEdit ? $quotation->live_band : false) ? 'checked' : '' }}>
+        <label class="form-check-label">Live Band</label>
+    </div>
+>>>>>>> Stashed changes
 </div>
