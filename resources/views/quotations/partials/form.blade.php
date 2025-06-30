@@ -1,23 +1,25 @@
 @php
     $isEdit = isset($quotation);
+    $user = Auth::user();
+    $isClient = $user && $user->hasRole('client');
 @endphp
 
 <div class="mb-3">
     <label class="form-label">Name</label>
     <input type="text" name="cust_name" class="form-control"
-        value="{{ old('cust_name', $isEdit ? $quotation->cust_name : '') }}" required>
-</div>
-
-<div class="mb-3">
-    <label class="form-label">Phone</label>
-    <input type="text" name="cust_phone" class="form-control"
-        value="{{ old('cust_phone', $isEdit ? $quotation->cust_phone : '') }}" required>
+        value="{{ old('cust_name', $isClient ? $user->name : ($isEdit ? $quotation->cust_name : '')) }}" required>
 </div>
 
 <div class="mb-3">
     <label class="form-label">Email</label>
     <input type="email" name="cust_email" class="form-control"
-        value="{{ old('cust_email', $isEdit ? $quotation->cust_email : '') }}" required>
+        value="{{ old('cust_email', $isClient ? $user->email : ($isEdit ? $quotation->cust_email : '')) }}" required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Phone</label>
+    <input type="text" name="cust_phone" class="form-control"
+        value="{{ old('cust_phone', $isClient ? $user->phone : ($isEdit ? $quotation->cust_phone : '')) }}" required>
 </div>
 
 <div class="mb-3">
