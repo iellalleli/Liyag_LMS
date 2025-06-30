@@ -11,10 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('combined_leads', function (Blueprint $table) {
-            // Drop the unique index first
-            $table->dropUnique(['quotation_id']);
-            // Drop the column itself
-            $table->dropColumn('quotation_id');
+            if (Schema::hasColumn('combined_leads', 'quotation_id')) {
+                $table->dropColumn('quotation_id');
+            }
         });
     }
 
@@ -24,8 +23,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('combined_leads', function (Blueprint $table) {
-            // Re-add the column if you rollback
-            $table->string('quotation_id')->unique()->nullable();
+            $table->unsignedBigInteger('quotation_id')->nullable()->unique(); // or drop `unique()` if unnecessary
         });
     }
 };

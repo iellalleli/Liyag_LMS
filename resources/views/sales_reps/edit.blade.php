@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
+@include('components.dashboard-style')
+
 @section('content')
 <div class="container">
-    <h2>Edit Sales Rep</h2>
+    <h2 class="section-heading">Edit Sales Representative</h2>
 
     <form action="{{ route('sales-reps.update', $salesRep->id) }}" method="POST">
-        @csrf @method('PUT')
+        @csrf
+        @method('PUT')
         @include('sales_reps.partials.form', ['salesRep' => $salesRep])
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('sales-reps.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 @endsection

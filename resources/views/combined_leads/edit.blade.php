@@ -1,10 +1,69 @@
 @extends('layouts.app')
 
-@section('content')
-    <div class="container">
-        <h2>Edit Lead</h2>
+@push('styles')
+    <style>
+        .lead-form label {
+            font-weight: 600;
+            color: #4b2e2e;
+        }
 
-        {{-- Validation errors --}}
+        .lead-form .form-control,
+        .lead-form .form-select {
+            border-radius: 12px;
+            border: 1px solid #e2d4c5;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .lead-form .form-check-label {
+            font-weight: 500;
+            margin-left: 0.5rem;
+            color: #6F4E37;
+        }
+
+        .lead-form .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #6F4E37;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(111, 78, 55, 0.15);
+        }
+
+        .custom-btn {
+            background-color: #d8c0aa;
+            color: #fff;
+            border-radius: 20px;
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-btn:hover {
+            background-color: #c8ae97;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            border-radius: 20px;
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            background-color: #e0dbd4;
+            color: #4b2e2e;
+            border: none;
+            margin-left: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d3c8be;
+            color: #4b2e2e;
+        }
+    </style>
+@endpush
+
+@section('content')
+    <div class="container lead-form">
+        <h2 class="section-title">Edit Lead</h2>
+
         @include('components.validation-errors')
 
         <form method="POST" action="{{ route('combined_leads.update', $combinedLead->id) }}">
@@ -33,7 +92,7 @@
             {{-- Communication Method --}}
             <div class="mb-3">
                 <label>Communication Method</label>
-                <select name="communication_method" class="form-control" required>
+                <select name="communication_method" class="form-select" required>
                     <option value="">-- Select Communication Method --</option>
                     @foreach(['Email', 'Phone', 'Messenger'] as $method)
                         <option value="{{ $method }}" {{ old('communication_method', $combinedLead->communication_method) == $method ? 'selected' : '' }}>
@@ -42,7 +101,6 @@
                     @endforeach
                 </select>
             </div>
-
 
             {{-- Target Wedding Date and Wedding Date --}}
             <div class="row mb-3">
@@ -60,24 +118,21 @@
 
             {{-- Budget Range --}}
             <div class="mb-3">
-                <label for="budget_range" class="form-label">Budget Range</label>
-                <select name="budget_range" class="form-control" required>
+                <label>Budget Range</label>
+                <select name="budget_range" class="form-select" required>
                     <option value="">-- Select Range --</option>
-                    <option value="under_50k" {{ old('budget_range', $combinedLead->budget_range) == 'under_50k' ? 'selected' : '' }}>
-                        Under ₱50,000
-                    </option>
-                    <option value="50k_100k" {{ old('budget_range', $combinedLead->budget_range) == '50k_100k' ? 'selected' : '' }}>
-                        ₱50,000 - ₱100,000
-                    </option>
-                    <option value="100k_200k" {{ old('budget_range', $combinedLead->budget_range) == '100k_200k' ? 'selected' : '' }}>
-                        ₱100,000 - ₱200,000
-                    </option>
-                    <option value="200k_plus" {{ old('budget_range', $combinedLead->budget_range) == '200k_plus' ? 'selected' : '' }}>
-                        Above ₱200,000
-                    </option>
+                    @foreach([
+                        'under_50k' => 'Under ₱50,000',
+                        '50k_100k' => '₱50,000 - ₱100,000',
+                        '100k_200k' => '₱100,000 - ₱200,000',
+                        '200k_plus' => 'Above ₱200,000'
+                    ] as $key => $label)
+                        <option value="{{ $key }}" {{ old('budget_range', $combinedLead->budget_range) == $key ? 'selected' : '' }}>
+                            {{ $label }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
-
 
             {{-- Guest Count --}}
             <div class="mb-3">
@@ -89,16 +144,18 @@
             {{-- Services --}}
             <div class="mb-3">
                 <label>Services</label><br>
-                <label><input type="checkbox" name="package_deal" value="1" {{ old('package_deal', $combinedLead->package_deal) ? 'checked' : '' }}> Package Deal</label><br>
-                <label><input type="checkbox" name="catering" value="1" {{ old('catering', $combinedLead->catering) ? 'checked' : '' }}> Catering</label><br>
-                <label><input type="checkbox" name="hair_makeup" value="1" {{ old('hair_makeup', $combinedLead->hair_makeup) ? 'checked' : '' }}> Hair & Makeup</label><br>
-                <label><input type="checkbox" name="live_band" value="1" {{ old('live_band', $combinedLead->live_band) ? 'checked' : '' }}> Live Band</label>
+                @foreach(['package_deal' => 'Package Deal', 'catering' => 'Catering', 'hair_makeup' => 'Hair & Makeup', 'live_band' => 'Live Band'] as $field => $label)
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" name="{{ $field }}" value="1" {{ old($field, $combinedLead->$field) ? 'checked' : '' }}>
+                        <label class="form-check-label">{{ $label }}</label>
+                    </div>
+                @endforeach
             </div>
 
             {{-- Stage --}}
             <div class="mb-3">
                 <label>Stage</label>
-                <select name="stage" class="form-control" required>
+                <select name="stage" class="form-select" required>
                     <option value="">-- Select Stage --</option>
                     @foreach(['Not Started', 'Contacted', 'Booked', 'In Planning', 'Event Completed'] as $stage)
                         <option value="{{ $stage }}" {{ old('stage', $combinedLead->stage) == $stage ? 'selected' : '' }}>
@@ -108,12 +165,11 @@
                 </select>
             </div>
 
-
             @role('admin')
-                {{-- Assigned Rep --}}
+                {{-- Assigned Sales Rep --}}
                 <div class="mb-3">
                     <label>Assigned Sales Rep</label>
-                    <select name="assigned_rep" class="form-control">
+                    <select name="assigned_rep" class="form-select">
                         <option value="">-- Select Sales Rep --</option>
                         @foreach($salesReps as $rep)
                             <option value="{{ $rep->user_id }}"
@@ -125,12 +181,10 @@
                 </div>
             @endrole
 
-
-
             {{-- Lead Source --}}
             <div class="mb-3">
-                <label for="lead_source" class="form-label">Lead Source</label>
-                <select class="form-control" name="lead_source" required>
+                <label>Lead Source</label>
+                <select class="form-select" name="lead_source" required>
                     <option value="">-- Select Lead Source --</option>
                     @foreach(['Website', 'Personal Contact', 'Facebook', 'Instagram'] as $source)
                         <option value="{{ $source }}" {{ old('lead_source', $combinedLead->lead_source) == $source ? 'selected' : '' }}>
@@ -140,10 +194,9 @@
                 </select>
             </div>
 
-
             {{-- Action Buttons --}}
-            <div class="mb-3">
-                <button class="btn btn-primary">Update Lead</button>
+            <div class="mt-4">
+                <button type="submit" class="custom-btn">Update Lead</button>
                 <a href="{{ route('combined_leads.index') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
