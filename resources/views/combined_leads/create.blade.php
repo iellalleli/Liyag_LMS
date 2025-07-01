@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+    $today = \Carbon\Carbon::today()->toDateString();
+@endphp
+
+
 @push('styles')
     <style>
         .lead-form label {
@@ -95,15 +100,26 @@
                 @endforeach
             </select>
         </div>
-
+        
         <div class="row mb-3">
             <div class="col-md-6">
                 <label>Target Wedding Date</label>
-                <input type="date" name="target_wedding_date" class="form-control" value="{{ old('target_wedding_date') }}" required>
+                <input 
+                    type="date" 
+                    name="target_wedding_date" 
+                    class="form-control" 
+                    value="{{ old('target_wedding_date') }}" 
+                    min="{{ $today }}"
+                    required>
             </div>
             <div class="col-md-6">
                 <label>Wedding Date</label>
-                <input type="date" name="wedding_date" class="form-control" value="{{ old('wedding_date') }}">
+                <input 
+                    type="date" 
+                    name="wedding_date" 
+                    class="form-control" 
+                    value="{{ old('wedding_date') }}" 
+                    min="{{ $today }}">
             </div>
         </div>
 

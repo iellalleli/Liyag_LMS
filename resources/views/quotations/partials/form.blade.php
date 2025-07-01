@@ -37,8 +37,10 @@
 <div class="mb-3">
     <label class="form-label">Target Wedding Date</label>
     <input type="date" name="target_wedding_date" class="form-control"
-        value="{{ old('target_wedding_date', $isEdit ? $quotation->target_wedding_date : '') }}">
+        value="{{ old('target_wedding_date', $isEdit ? $quotation->target_wedding_date : '') }}"
+        min="{{ \Carbon\Carbon::today()->toDateString() }}">
 </div>
+
 
 <div class="mb-3">
     <label class="form-label">Budget Range</label>
