@@ -16,15 +16,12 @@
     <label class="form-label">Email</label>
     <input type="email" name="cust_email" class="form-control"
         value="{{ old('cust_email', $isClient ? $user->email : ($isEdit ? $quotation->cust_email : '')) }}" required>
-<<<<<<< Updated upstream
 </div>
 
 <div class="mb-3">
     <label class="form-label">Phone</label>
     <input type="text" name="cust_phone" class="form-control"
         value="{{ old('cust_phone', $isClient ? $user->phone : ($isEdit ? $quotation->cust_phone : '')) }}" required>
-=======
->>>>>>> Stashed changes
 </div>
 
 <div class="mb-3">
